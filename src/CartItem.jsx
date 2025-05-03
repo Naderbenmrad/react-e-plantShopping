@@ -7,29 +7,53 @@ const CartItem = ({ onContinueShopping }) => {
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
 
-  // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
- 
+    let total = 0;
+    cart.forEach(item => {
+      total += parseFloat(item.cost.substring(1)) * item.quantity;
+    });
+    return total;
   };
 
   const handleContinueShopping = (e) => {
-   
+    e.preventDefault();
+    onContinueShopping(); 
   };
 
-
+  const handleCheckoutShopping = (e) => {
+    alert('Functionality to be added for future reference');
+  };
 
   const handleIncrement = (item) => {
+    const updatedItem = { ...item, quantity: item.quantity + 1 };
+    dispatch(updateQuantity(updatedItem));
+    alert(`Incremented ${item.name} quantity to ${updatedItem.quantity}`);
+    console.log(`Incremented ${item.name} quantity to ${updatedItem.quantity}`);
+    console.log(`Updated item: ${JSON.stringify(updatedItem)}`);
   };
 
   const handleDecrement = (item) => {
-   
+    if (item.quantity > 1) {
+      const updatedItem = { ...item, quantity: item.quantity - 1 };
+      dispatch(updateQuantity(updatedItem));
+      alert(`Decremented ${item.name} quantity to ${updatedItem.quantity}`);
+      console.log(`Decremented ${item.name} quantity to ${updatedItem.quantity}`);
+      console.log(`Updated item: ${JSON.stringify(updatedItem)}`);
+    } else {
+      alert('Minimum quantity is 1. Cannot decrement further.');
+    }
+    console.log(`Decremented ${item.name} quantity to ${item.quantity}`);
   };
 
   const handleRemove = (item) => {
+    dispatch(removeItem(item.name));
+    alert(`Removed ${item.name} from cart`);
+    console.log(`Removed ${item.name} from cart`);
+    console.log(`Updated cart: ${JSON.stringify(cart)}`);
   };
 
-  // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
+    return parseFloat(item.cost.substring(1)) * item.quantity;
   };
 
   return (
