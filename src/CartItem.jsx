@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeItem, updateQuantity } from './CartSlice';
+import { addItem, removeItem, updateQuantity } from './CartSlice';
 import './CartItem.css';
 
 const CartItem = ({ onContinueShopping }) => {
@@ -25,11 +25,7 @@ const CartItem = ({ onContinueShopping }) => {
   };
 
   const handleIncrement = (item) => {
-    const updatedItem = { ...item, quantity: item.quantity + 1 };
-    dispatch(updateQuantity(updatedItem));
-    alert(`Incremented ${item.name} quantity to ${updatedItem.quantity}`);
-    console.log(`Incremented ${item.name} quantity to ${updatedItem.quantity}`);
-    console.log(`Updated item: ${JSON.stringify(updatedItem)}`);
+    dispatch(addItem(item));
   };
 
   const handleDecrement = (item) => {
