@@ -13,6 +13,7 @@ function ProductList({ onHomeClick }) {
 
     const cartItems = useSelector((state) => state.cart.items);
     const quantities = cartItems.map(item => item.quantity);
+    const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
     const plantsArray = [
         {
